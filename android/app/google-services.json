@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "291097424077",
+    "project_id": "voicereminder-30acc",
+    "storage_bucket": "voicereminder-30acc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:291097424077:android:206cf11c93f9738b203984",
+        "android_client_info": {
+          "package_name": "com.reminder.reminderplus"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqRQCd-DEg5RS7n9QSxyo-tqzYkaIzhFM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
