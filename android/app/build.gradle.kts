@@ -1,3 +1,15 @@
+import java.io.FileInputStream
+import java.util.Properties
+
+val keystorePropertiesFile: File = rootProject.file("key.properties")
+val keystoreProperties = Properties()
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+    println("Loaded keystoreProperties: alias=${keystoreProperties.getProperty("keyAlias")} storeFile=${keystoreProperties.getProperty("storeFile")}")
+} else {
+    println("key.properties not found at ${keystorePropertiesFile.absolutePath}")
+}
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -31,9 +43,21 @@ android {
         manifestPlaceholders["appAuthRedirectScheme"] = "com.reminder.reminderplus"
     }
 
+    signingConfigs {
+        create("release") {
+            val storeFilePath = keystoreProperties.getProperty("storeFile")
+            if (storeFilePath != null) {
+                storeFile = file(storeFilePath)
+            }
+            storePassword = keystoreProperties.getProperty("storePassword") ?: "Remind3rPlus!2026"
+            keyAlias = keystoreProperties.getProperty("keyAlias") ?: "upload"
+            keyPassword = keystoreProperties.getProperty("keyPassword") ?: "Remind3rPlus!2026"
+        }
+    }
+
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(

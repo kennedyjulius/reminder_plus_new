@@ -6,7 +6,11 @@ import 'apple_auth_service.dart';
 class FirebaseService {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  static final GoogleSignIn _googleSignIn = GoogleSignIn();
+  // Configure GoogleSignIn with serverClientId for Firebase Auth
+  // The serverClientId is the Web client ID from Firebase Console
+  static final GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: ['email', 'profile'],
+  );
 
   // Authentication Methods
   static User? get currentUser => _auth.currentUser;
@@ -17,6 +21,14 @@ class FirebaseService {
   static Future<UserCredential?> signInWithGoogle() async {
     try {
       print('🔐 Initiating Google Sign-In...');
+      
+      // First, try to sign out any existing session to ensure fresh sign-in
+      try {
+        await _googleSignIn.signOut();
+      } catch (e) {
+        print('Note: Could not sign out previous session: $e');
+      }
+      
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       
       if (googleUser == null) {
@@ -25,14 +37,32 @@ class FirebaseService {
       }
 
       print('✅ Google account selected: ${googleUser.email}');
+      print('🔐 Requesting authentication tokens...');
+      
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      
+      print('📋 Token status:');
+      print('   - Access Token: ${googleAuth.accessToken != null ? "✅ Present" : "❌ Missing"}');
+      print('   - ID Token: ${googleAuth.idToken != null ? "✅ Present" : "❌ Missing"}');
       
       if (googleAuth.accessToken == null || googleAuth.idToken == null) {
         print('❌ Google Sign-In failed: Missing access token or ID token');
-        print('   This usually means OAuth configuration is missing.');
+        print('');
+        print('⚠️ This usually means:');
+        print('   1. OAuth client IDs are not configured in Firebase Console');
+        print('   2. SHA-1 certificate fingerprint not added to Firebase Console');
+        print('   3. Package name mismatch in Firebase Console');
+        print('');
+        print('📝 To fix:');
+        print('   1. Go to Firebase Console → Project Settings → Your Android App');
+        print('   2. Add SHA-1 fingerprint: 31:9F:62:2D:4C:17:B8:CE:02:D7:9B:AE:A3:8D:E7:B6:48:EF:C5:D6');
+        print('   3. Ensure OAuth client IDs are configured (Web client ID should be present)');
+        print('   4. Download updated google-services.json and replace the current one');
+        print('   5. Ensure package name matches: com.reminder.reminderplus');
         return null;
       }
 
+      print('🔐 Creating Firebase credential...');
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
@@ -41,6 +71,8 @@ class FirebaseService {
       print('🔐 Signing in with Firebase...');
       final userCredential = await _auth.signInWithCredential(credential);
       print('✅ Firebase authentication successful');
+      print('   User ID: ${userCredential.user?.uid}');
+      print('   Email: ${userCredential.user?.email}');
       
       // Create user document if it doesn't exist
       if (userCredential.additionalUserInfo?.isNewUser ?? false) {
@@ -49,25 +81,33 @@ class FirebaseService {
       }
       
       return userCredential;
-    } catch (e) {
+    } catch (e, stackTrace) {
       print('❌ Error signing in with Google: $e');
+      print('Stack trace: $stackTrace');
       
       // Provide helpful error messages for common issues
-      if (e.toString().contains('ApiException: 10')) {
-        print('⚠️ DEVELOPER_ERROR (10): This usually means:');
-        print('   1. SHA-1 certificate fingerprint not added to Firebase Console');
-        print('   2. Package name mismatch in Firebase Console');
-        print('   3. OAuth client ID not configured correctly');
+      final errorString = e.toString().toLowerCase();
+      
+      if (errorString.contains('apiexception: 10') || errorString.contains('10:')) {
         print('');
-        print('📝 To fix:');
-        print('   1. Get your SHA-1: cd android && ./gradlew signingReport');
-        print('   2. Add SHA-1 to Firebase Console → Project Settings → Your Android App');
-        print('   3. Download updated google-services.json');
-        print('   4. Ensure package name matches: com.reminder.reminderplus');
-      } else if (e.toString().contains('network')) {
+        print('⚠️ DEVELOPER_ERROR (10): OAuth configuration issue');
+        print('');
+        print('📝 Required fixes in Firebase Console:');
+        print('   1. Go to Firebase Console → Project Settings → Your Android App');
+        print('   2. Add SHA-1 fingerprint: 31:9F:62:2D:4C:17:B8:CE:02:D7:9B:AE:A3:8D:E7:B6:48:EF:C5:D6');
+        print('   3. Ensure "Web client ID" is configured (needed for Firebase Auth)');
+        print('   4. Download updated google-services.json');
+        print('   5. Replace android/app/google-services.json with the new file');
+        print('   6. Rebuild the app');
+      } else if (errorString.contains('network') || errorString.contains('socket')) {
         print('⚠️ Network error: Check your internet connection');
-      } else if (e.toString().contains('sign_in_cancelled')) {
+      } else if (errorString.contains('sign_in_cancelled') || errorString.contains('cancelled')) {
         print('ℹ️ Sign-in was cancelled by user');
+      } else if (errorString.contains('invalid_credential') || errorString.contains('invalid')) {
+        print('⚠️ Invalid credential: OAuth client ID may be misconfigured');
+        print('   Check Firebase Console → Authentication → Sign-in method → Google');
+      } else {
+        print('⚠️ Unknown error: Please check Firebase Console configuration');
       }
       
       return null;

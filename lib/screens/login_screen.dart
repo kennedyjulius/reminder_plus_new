@@ -59,10 +59,22 @@ class _LoginScreenState extends State<LoginScreen> {
         await FirebaseService.updateLastLogin();
         Navigator.pushReplacementNamed(context, '/home');
       } else {
-        _showErrorSnackBar('Google sign in failed');
+        _showErrorSnackBar('Google sign in failed. Please check console logs for details.');
       }
     } catch (e) {
-      _showErrorSnackBar('Google sign in failed: ${e.toString()}');
+      final errorMsg = e.toString().toLowerCase();
+      String userMessage = 'Google sign in failed';
+      
+      if (errorMsg.contains('apiexception: 10') || errorMsg.contains('10:')) {
+        userMessage = 'Google Sign-In configuration error. Please check Firebase Console settings.';
+      } else if (errorMsg.contains('network')) {
+        userMessage = 'Network error. Please check your internet connection.';
+      } else if (errorMsg.contains('cancelled')) {
+        userMessage = 'Sign-in was cancelled.';
+      }
+      
+      _showErrorSnackBar(userMessage);
+      print('Google Sign-In Error: $e');
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }

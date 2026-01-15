@@ -937,8 +937,8 @@ class VoiceDateParser {
         }
       }
       // If still empty, use original
-      if (title.isEmpty) {
-        title = originalText;
+    if (title.isEmpty) {
+      title = originalText;
       }
     }
     

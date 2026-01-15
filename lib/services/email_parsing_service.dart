@@ -15,7 +15,7 @@ class EmailParsingService {
       return await GmailParserService.isConnected();
     } catch (e) {
       print('Error checking Gmail connection: $e');
-      return false;
+    return false;
     }
   }
 
@@ -25,7 +25,7 @@ class EmailParsingService {
       return await OutlookParserService.isConnected();
     } catch (e) {
       print('Error checking Outlook connection: $e');
-      return false;
+    return false;
     }
   }
 

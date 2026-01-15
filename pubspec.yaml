@@ -1,6 +1,6 @@
 name: reminder_plus
 description: Voice Reminder+ - A beautiful reminder app with voice commands
-version: 1.0.9+9
+version: 1.0.10+10
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
