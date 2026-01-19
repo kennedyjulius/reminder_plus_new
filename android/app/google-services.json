@@ -1,76 +1,48 @@
 {
   "project_info": {
-    "project_number": "554993497470",
-    "project_id": "reminder-plus-93ff0",
-    "storage_bucket": "reminder-plus-93ff0.firebasestorage.app"
+    "project_number": "777883723878",
+    "project_id": "reminder-plus-new",
+    "storage_bucket": "reminder-plus-new.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:554993497470:android:9fe3afd9fa43398a73af2f",
+        "mobilesdk_app_id": "1:777883723878:android:0a30b57b2f1d54f030a5a7",
         "android_client_info": {
           "package_name": "com.reminder.reminderplus"
         }
       },
       "oauth_client": [
         {
-          "client_id": "554993497470-816ej9ae8oq11gm564pdj6r94q0khs92.apps.googleusercontent.com",
+          "client_id": "777883723878-k4oqomkl4qr46ntc1go7ce2lebqkrfrh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.reminder.reminderplus",
+            "certificate_hash": "8a3be6deeb884914363647464b2aa43273fdca47"
+          }
+        },
+        {
+          "client_id": "777883723878-vpgm7otu1185tk74s6vc358h6r308vs6.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCc_SBAciLAir9qg2Kx1yVhL9mByh56VvI"
+          "current_key": "AIzaSyB4zHi5KnCKn67fBiPxY2um3LtMxIf34B8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "554993497470-816ej9ae8oq11gm564pdj6r94q0khs92.apps.googleusercontent.com",
+              "client_id": "777883723878-vpgm7otu1185tk74s6vc358h6r308vs6.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "554993497470-1kjggn8s4u34qmdof0qhmrpr33dmkshf.apps.googleusercontent.com",
+              "client_id": "777883723878-4tgsam5u5tv29qh81ggv9tkmdpjsimjg.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.reminder.reminderplus"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:554993497470:android:bed8a8cf7c511de473af2f",
-        "android_client_info": {
-          "package_name": "com.reminder.reminderplus_new"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "554993497470-816ej9ae8oq11gm564pdj6r94q0khs92.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCc_SBAciLAir9qg2Kx1yVhL9mByh56VvI"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "554993497470-816ej9ae8oq11gm564pdj6r94q0khs92.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "554993497470-1kjggn8s4u34qmdof0qhmrpr33dmkshf.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.reminder.reminderplus"
+                "bundle_id": "com.example.reminderPlus"
               }
             }
           ]
