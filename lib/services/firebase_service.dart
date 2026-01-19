@@ -55,10 +55,11 @@ class FirebaseService {
         print('');
         print('📝 To fix:');
         print('   1. Go to Firebase Console → Project Settings → Your Android App');
-        print('   2. Add SHA-1 fingerprint: 31:9F:62:2D:4C:17:B8:CE:02:D7:9B:AE:A3:8D:E7:B6:48:EF:C5:D6');
+        print('   2. Add the SHA-1 (and SHA-256) of the certificate you are running with');
+        print('      - Debug builds: ~/.android/debug.keystore (alias androiddebugkey)');
+        print('      - Release builds: your release keystore (alias from key.properties)');
         print('   3. Ensure OAuth client IDs are configured (Web client ID should be present)');
         print('   4. Download updated google-services.json and replace the current one');
-        print('   5. Ensure package name matches: com.reminder.reminderplus');
         return null;
       }
 
@@ -94,7 +95,7 @@ class FirebaseService {
         print('');
         print('📝 Required fixes in Firebase Console:');
         print('   1. Go to Firebase Console → Project Settings → Your Android App');
-        print('   2. Add SHA-1 fingerprint: 31:9F:62:2D:4C:17:B8:CE:02:D7:9B:AE:A3:8D:E7:B6:48:EF:C5:D6');
+        print('   2. Add the SHA-1 (and SHA-256) of the certificate you are running with');
         print('   3. Ensure "Web client ID" is configured (needed for Firebase Auth)');
         print('   4. Download updated google-services.json');
         print('   5. Replace android/app/google-services.json with the new file');

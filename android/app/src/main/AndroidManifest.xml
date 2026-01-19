@@ -54,7 +54,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="com.googleusercontent.apps.76730819991-8gm4ogeq40porell7aprn3c5uj60mht6" />
+                <data android:scheme="com.googleusercontent.apps.554993497470-816ej9ae8oq11gm564pdj6r94q0khs92" />
             </intent-filter>
 
             <!-- Microsoft OAuth -->
